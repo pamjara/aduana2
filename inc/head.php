@@ -95,8 +95,7 @@
 
 
   <!--  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script> -->
-        <script language="javascript" src="js/jquery-1.7.2.min.js"></script>
-        <script language="javascript" src="js/fancywebsocket.js"></script>
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

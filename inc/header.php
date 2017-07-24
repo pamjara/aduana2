@@ -4,7 +4,10 @@
                
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 
-                            <img src="img/logo.jpg" style="display:inline" height="45px">  Aduanas Chile
+                <img src="img/gobierno.png" style="display:inline" height="45px"> 
+                <img src="img/aduana.png" style="display:inline" height="45px"> 
+                <br>
+                 Aduanas Chile
                      
             
             </a>
@@ -206,7 +209,7 @@
                         </li> 
 						*/ ?>
                         <!-- User Account: style can be found in dropdown.less -->
-
+<br><br>
                      
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

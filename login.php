@@ -51,11 +51,11 @@ include 'inc/comun.php'; ?>
 
     if (isset($_POST["iniciar"])) {
         # code...
-        $usuario = $_POST["usuario"];
+        $usuario =  $_POST["usuario"];
         $password = $_POST["pass"];
         
 		
-        $usuario = $bd->SelectText('*', 'administrador', "correo='$usuario' AND pass='$password'",false,null,null);
+        $usuario = $bd->SelectText('*', 'funcionario', "correo='$usuario' AND pass='$password'",false,null,null);
         $bd->consulta($usuario);
         if ($mostrar = $bd->mostrar_registros()) {
             

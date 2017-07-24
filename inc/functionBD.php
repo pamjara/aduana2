@@ -20,24 +20,24 @@ class GestarBD{
 	 	//$this->conect = mysql_connect($this->Servidor,$this->Usuario,$this->Clave);
 		//mysql_select_db($this->BaseDatos,$this->conect);
 		
-		if (! $this->conect = mysql_connect($this->servidor,$this->usuario,$this->pass)) {
+		if (! $this->conect = mysqli_connect($this->servidor,$this->usuario,$this->pass, $this->base_datos)) {
 				# code...
 				echo "Error al conectar";
 				exit();
 			}
 
-			if (! mysql_select_db($this->base_datos,$this->conect)) {
+			if (! mysqli_select_db($this->conect, $this->base_datos)) {
 					# code...
 					echo "Error Base de datos";
 					exit();
 				}
-				mysql_set_charset('utf8', $this->conect);
+				mysqli_set_charset( $this->conect , 'utf8');
 				return false;	
 	}
 	public function consulta($consulta)
 	{
 		# code...
-		$this->consulta = mysql_query($consulta,$this->conect);
+		$this->consulta = mysqli_query($this->conect, $consulta);
 		
 	}
 
@@ -47,7 +47,7 @@ class GestarBD{
 	public function mostrar_registros()
 	{
 		# code...
-		if ($row = mysql_fetch_array($this->consulta,MYSQL_ASSOC)) {
+		if ($row = mysqli_fetch_array($this->consulta)) {
 			# code...
 			return $row;
 		} else {
@@ -56,7 +56,7 @@ class GestarBD{
 	}
 	public function mostrar_row()
 	{
-		if ($maxrow = mysql_fetch_row($this->consulta)) {
+		if ($maxrow = mysqli_fetch_row($this->consulta)) {
 			$idmaxrow = $maxrow[0];
 			return $idmaxrow;
 		}else {
@@ -65,7 +65,7 @@ class GestarBD{
 	}
 	public function numeroFilas()
 	{
-		if ($fila = mysql_num_rows($this->consulta)) {
+		if ($fila = mysqli_num_rows($this->consulta)) {
 			$num_rows = $fila;
 			return $num_rows;
 		}else{
@@ -74,7 +74,7 @@ class GestarBD{
 	}
 	public function numero_campos()
 	{
-		if ($campos = mysql_num_fields($this->consulta)) {
+		if ($campos = mysqli_num_fields($this->consulta)) {
 			return $campos;
 		}else{
 			return false;

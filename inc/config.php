@@ -16,7 +16,7 @@ $config = array(
 	"servidor"=>"localhost",
 	"basedatos"=>"aduana",
 	"usuario"=>"root",
-	"pass"=>"",
+	"pass"=>"1212",
 
 	"googleanalytics"=>false,//Codigo UA- usado en las analiticas de Google
 	"googlesiteverification"=>false,

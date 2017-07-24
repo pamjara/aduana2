@@ -4,9 +4,10 @@
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
     <!-- Sidebar user panel -->
+    <br><br>
     <div class="user-panel">
     <div class="pull-left image">
-    <img src="img/avatar3.png" class="img-circle" alt="User Image" />
+        <img src="img/avatar3.png" class="img-circle" alt="User Image" />
     </div>
     <div class="pull-left info">
     <p>Hola, <?php echo $_SESSION['dondequeda_nombre']; ?></p>

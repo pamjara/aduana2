@@ -3,8 +3,7 @@ session_start();
 //Va guardando toda la salida en una cache
 ob_start();
 include 'config.php';
-include 'functionBD.php';
-include 'resize.php';
+include 'functionBD.php'; 
 //include 'functionForm.php';
 //include 'functionTable.php';
 

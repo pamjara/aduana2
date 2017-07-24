@@ -23,12 +23,17 @@ DROP TABLE IF EXISTS `funcionario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `funcionario` (
-  `usuario` varchar(50) NOT NULL,
+  `rut` int(11) NOT NULL,
+  `alias` varchar(50) NOT NULL,
+  `correo` varchar(50) NOT NULL,
   `pass` varchar(100) NOT NULL,
   `nombre` varchar(30) NOT NULL,
-  `apellido` varchar(30) DEFAULT NULL,
-  `correo` varchar(50) NOT NULL,
-  `nive_usua` tinyint(1) NOT NULL COMMENT '1-> \n2->'
+  `apellido` varchar(30) NOT NULL,
+  `nive_usua` tinyint(1) NOT NULL COMMENT '1->admin \n2->otro',
+  `fono` int(11) DEFAULT NULL,
+  `cargo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`rut`),
+  UNIQUE KEY `correo_UNIQUE` (`correo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,7 +43,7 @@ CREATE TABLE `funcionario` (
 
 LOCK TABLES `funcionario` WRITE;
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
-INSERT INTO `funcionario` VALUES ('yond','123456','yonathan','suarez','yonathan@gmail.com',1),('yond1994','123456','YONATHAN DOS','SUAREZ','daniel@hotmail.com',2),('pamela','1234','PAMELA','JARA','pame29jara@gmail.com',1);
+INSERT INTO `funcionario` VALUES (10123123,'yond1994','daniel@hotmail.com','123','YONATHAN DOS','SUAREZ',2,NULL,NULL),(11123123,'pamela','pame29jara@gmail.com','123','PAMELA','JARA',1,NULL,NULL),(12123123,'yond','yonathan@gmail.com','123','yonathan','suarez',1,NULL,NULL);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,17 +55,17 @@ DROP TABLE IF EXISTS `ingresos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ingresos` (
-  `id_ingresos` int(11) NOT NULL AUTO_INCREMENT,
-  `dusIngresos` int(50) NOT NULL,
-  `fechaIngresos` date NOT NULL,
-  `patenteIngresos` varchar(50) NOT NULL,
-  `cantIngresos` int(20) DEFAULT NULL,
-  `numIngresos` bigint(30) NOT NULL,
-  `kbingresos` int(30) NOT NULL,
-  `pasajeroIngresos` int(30) NOT NULL,
-  `estadoIngresos` varchar(30) NOT NULL,
-  `ingresoSellos` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_ingresos`)
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `dus` int(50) NOT NULL,
+  `fecha` date NOT NULL,
+  `patente` varchar(50) NOT NULL,
+  `cantidad` int(20) DEFAULT NULL,
+  `numero` bigint(30) NOT NULL,
+  `kilos` int(30) NOT NULL,
+  `pasajeros` int(30) NOT NULL,
+  `estado` varchar(30) NOT NULL,
+  `rut` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -70,7 +75,7 @@ CREATE TABLE `ingresos` (
 
 LOCK TABLES `ingresos` WRITE;
 /*!40000 ALTER TABLE `ingresos` DISABLE KEYS */;
-INSERT INTO `ingresos` VALUES (7,0,'0000-00-00','HUEAWAI',2,50000,80000,0,'NUEVO',''),(8,0,'0000-00-00','SAMSUNG',1,100000,130000,0,'USADO',''),(9,0,'0000-00-00','HUEAWAI',0,50000,80000,0,'NUEVO',''),(10,0,'0000-00-00','HUEAWAI',0,100000,130000,0,'NUEVO',''),(11,0,'0000-00-00','papa',0,233,233232,0,'USADO',''),(12,0,'0000-00-00','marca',0,13123,124124,124124,'REPARADO',''),(13,0,'0000-00-00','dsgdsfg',0,434,36436,4636,'3',''),(14,0,'0000-00-00','werwer',0,2354,324234,234234,'A PIE',''),(15,1234,'2017-06-02','1234',0,12,1234,12,'BICICLETA','');
+INSERT INTO `ingresos` VALUES (7,0,'0000-00-00','HUEAWAI',2,50000,80000,0,'NUEVO',NULL),(8,0,'0000-00-00','SAMSUNG',1,100000,130000,0,'USADO',NULL),(9,0,'0000-00-00','HUEAWAI',0,50000,80000,0,'NUEVO',NULL),(10,0,'0000-00-00','HUEAWAI',0,100000,130000,0,'NUEVO',NULL),(11,0,'0000-00-00','papa',0,233,233232,0,'USADO',NULL),(12,0,'0000-00-00','marca',0,13123,124124,124124,'REPARADO',NULL),(13,0,'0000-00-00','dsgdsfg',0,434,36436,4636,'3',NULL),(14,0,'0000-00-00','werwer',0,2354,324234,234234,'A PIE',NULL),(15,1234,'2017-06-02','1234',0,12,1234,12,'BICICLETA',NULL);
 /*!40000 ALTER TABLE `ingresos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,38 +134,6 @@ LOCK TABLES `sellos` WRITE;
 INSERT INTO `sellos` VALUES (0,0,0,1,8),(0,0,0,0,9),(0,0,0,0,10),(0,0,0,0,11),(0,0,0,0,12),(0,0,0,0,13),(0,0,0,0,14),(0,0,0,0,15),(0,0,0,0,16),(0,0,0,0,17),(0,0,0,0,18);
 /*!40000 ALTER TABLE `sellos` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `usuarios`
---
-
-DROP TABLE IF EXISTS `usuarios`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `usuarios` (
-  `id_usuarios` int(11) NOT NULL AUTO_INCREMENT,
-  `cedula` int(50) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `apellido` varchar(50) NOT NULL,
-  `correo` varchar(50) DEFAULT NULL,
-  `fechai` varchar(40) NOT NULL,
-  `direccion` varchar(300) NOT NULL,
-  `telefono` int(20) NOT NULL,
-  PRIMARY KEY (`id_usuarios`),
-  UNIQUE KEY `cedula` (`cedula`),
-  UNIQUE KEY `correo` (`correo`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `usuarios`
---
-
-LOCK TABLES `usuarios` WRITE;
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (25,789456,'FREDDY','BELSAZAR','YON@GMAIL.COM','2016-09-05','CALLE 12 CARRERA 9-10',48442145);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -171,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-23 15:26:07
+-- Dump completed on 2017-07-24  2:10:22
