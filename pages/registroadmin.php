@@ -9,6 +9,8 @@ $fecha2=date("Y-m-d");
 if (isset($_GET['nuevo'])) { 
 
     if (isset($_POST['lugarguardar'])) {
+        $rut=strtoupper($_POST["nombre"]);
+        
         $nombre=strtoupper($_POST["nombre"]);
         $apellido=strtoupper($_POST["apellido"]);
         $correo=$_POST["correo"];
@@ -16,7 +18,7 @@ if (isset($_GET['nuevo'])) {
         $pass=$_POST["pw"];      
         $usua=$_POST["usuario"];      
 
-        $sql="select * from funcionario where correo='$correo'";
+        $sql="select * from funcionario where correo='$correo' or rut='$rut'";
 
         $cs=$bd->consulta($sql);
 
@@ -38,7 +40,9 @@ if (isset($_GET['nuevo'])) {
                 </div>';
         }
     }
+}
 ?>
+
 <div class="col-md-10">
     <!-- general form elements -->
     <div class="box box-primary">
@@ -110,16 +114,10 @@ if (isset($_GET['nuevo'])) {
             </div> 
         </form>
     </div><!-- /.box -->
-<?php
-}
-if (isset($_GET['lista'])) { 
-    $x1=$_GET['codigo'];
-    if (isset($_POST['lista'])) {
-}
-?>
+
 
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Lista de Administradores y Usuarios:</h3>                                    
@@ -139,7 +137,7 @@ if (isset($_GET['lista'])) {
                     <?php
                     if($tipo2==1){
 
-                        $consulta="SELECT id, nombre, apellido, correo, nive_usua FROM administrador ORDER BY id ASC ";
+                        $consulta="SELECT  rut, alias, correo, nombre, apellido, nive_usua, fono, cargo FROM funcionario ORDER BY rut ASC ";
                         $bd->consulta($consulta);
                         while ($fila=$bd->mostrar_registros()) {
                                 switch ($fila['status']) {
@@ -192,313 +190,8 @@ if (isset($_GET['lista'])) {
         </div><!-- /.box -->
     </div>
 
-<?php
-echo '
-<div class="col-md-3">
-<div class="box">
-<div class="box-header">
-<div class="box-header">
-<h3> <center>Agregar Administrador <a href="#" class="alert-link"></a></center></h3>                                    
-</div>
-<center>        
-<form  name="fe" action="?mod=registroadmin&nuevo" method="post" id="ContactForm">
 
 
-
-<input title="AGREGAR UN NUEVO ADMINISTRADOR" name="btn1"  class="btn btn-primary"type="submit" value="Agregar Nuevo">
-
-
-</form>
-</center>
-</div>
-</div>
-</div>  ';  ?>
-</br>       
-
-<div class="col-md-3">
-
-</div>
-
-<?php
-}
-
-
-
-if (isset($_GET['editar'])) { 
-
-//codigo que viene de la lista
-$x1=$_GET['codigo'];
-if (isset($_POST['editar'])) {
-
-
-
-$nombre=strtoupper($_POST["nombre"]);
-$apellido=strtoupper($_POST["apellido"]);
-$correo=$_POST["correo"];
-$nivel=strtoupper($_POST["nivel"]);
-$pass=$_POST["pw"];      
-$usuario=$_POST["usuario"];      
-
-
-
-
-
-if( $nombre=="" )
-{
-
-echo "
-<script> alert('campos vacios')</script>
-";
-echo "<br>";
-
-}
-else
-{
-
-
-
-
-
-
-
-$sql22=" UPDATE administrador SET 
-nombre='$nombre' ,
-apellido='$apellido' ,
-nive_usua='$nivel' ,
-correo='$correo', 
-usuario='$usuario' 
-where id='$x1'";
-
-
-$bd->consulta($sql22);
-
-
-
-//echo "Datos Guardados Correctamente";
-echo '<div class="alert alert-success alert-dismissable">
-<i class="fa fa-check"></i>
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-<b>Bien!</b> Datos Editados Correctamente... ';
-
-
-
-echo '   </div>';
-
-
-
-
-
-
-}
-
-}
-
-
-
-$consulta="SELECT usuario, nombre, apellido, correo, nive_usua FROM administrador where id='$x1'";
-$bd->consulta($consulta);
-while ($fila=$bd->mostrar_registros()) {
-
-
-
-?>
-<div class="col-md-10">
-<!-- general form elements -->
-<div class="box box-primary">
-<div class="box-header">
-<h3 class="box-title">Editar Administrador </h3>
-</div>
-
-
-<?php  echo '  <form role="form"  name="fe" action="?mod=registroadmin&editar=editar&codigo='.$x1.'" method="post">';
-?>
-<div class="box-body">
-<div class="form-group">
-
-
-
-
-<label for="exampleInputFile">Nombre</label>
-<input  onkeypress="return caracteres(event)" onblur="this.value=this.value.toUpperCase();" type="text" required type="tex" name="nombre" class="form-control" value=" <?php echo $fila['nombre'] ?>" id="exampleInputEmail1" placeholder="Intoducir el Nombre">
-<label for="exampleInputFile">Apellido</label>
-<input  onkeypress="return caracteres(event)" onblur="this.value=this.value.toUpperCase();" required type="tex" name="apellido" class="form-control" value=" <?php echo $fila['apellido'] ?>" id="exampleInputEmail1" placeholder="Apellido">
-
-<label for="exampleInputFile">Usuario</label>
-<input    required type="tex" name="usuario" class="form-control" value=" <?php echo $fila['usuario'] ?>" id="exampleInputEmail1" placeholder="Usuario">
-
-
-
-<label for="exampleInputFile">correo</label>
-<input  required type="email" name="correo" class="form-control" value=" <?php echo $fila['correo'] ?>"  placeholder="Correo">
-
-<label for="exampleInputFile">Nivel De Usuario</label>
-
-
-<select  for="exampleInputEmail" class="form-control" name='nivel'>
-<option  value="1">Administrador</option>
-<option value="2">Usuario Invitado</option>
-
-
-
-
-</select>
-
-
-</div>
-
-
-
-</div><!-- /.box-body -->
-
-<div class="box-footer">
-<button type="submit" class="btn btn-primary btn-lg" name="editar" id="editar" value="Editar">Editar</button>
-
-
-</div>
-</form>
-</div><!-- /.box -->
-<?php
-
-
-}
-}
-
-//eliminar
-
-if (isset($_GET['eliminar'])) { 
-
-//codigo que viene de la lista
-$x1=$_GET['codigo'];
-if (isset($_POST['eliminar'])) {
-
-
-
-$nombre=strtoupper($_POST["nombre"]);
-$apellido=strtoupper($_POST["apellido"]);
-$correo=strtoupper($_POST["correo"]);
-$nivel=strtoupper($_POST["nivel"]);
-$pass=$_POST["pw"];      
-$usuario=$_POST["usuario"];      
-
-
-if( $nombre=="" )
-{
-
-echo "
-<script> alert('campos vacios')</script>
-";
-echo "<br>";
-
-}
-else
-{
-
-
-
-
-
-
-
-$sql="delete from administrador where id='$x1' ";
-
-
-$bd->consulta($sql);
-
-
-
-//echo "Datos Guardados Correctamente";
-echo '<div class="alert alert-success alert-dismissable">
-<i class="fa fa-check"></i>
-<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-<b>Bien!</b> Se Elimino Correctamente... ';
-
-
-
-echo '   </div>';
-
-?><center>
-<div class="box-footer">
-
-
-<a href="?mod=registroadmin&lista=lista" class="alert-link">Regresar a Lista</a>
-
-
-</div>
-</center>
-<?php
-///////////////------////////////
-
-}
-
-}
-
-
-
-$consulta="SELECT usuario,id,nive_usua, nombre, apellido, correo FROM administrador where id='$x1'";
-$bd->consulta($consulta);
-while ($fila=$bd->mostrar_registros()) {
-
-
-
-?>
-<div class="col-md-10">
-<!-- general form elements -->
-<div class="box box-primary">
-<div class="box-header">
-<h3 class="box-title">Eliminar Administrador</h3>
-</div>
-
-
-<?php  echo '  <form role="form"  name="fe" action="?mod=registroadmin&eliminar=eliminar&codigo='.$x1.'" method="post">';
-?>
-<div class="box-body">
-<div class="form-group">
-
-
-
-
-<label for="exampleInputFile">Nombre</label>
-<input  onkeypress="return caracteres(event)" onblur="this.value=this.value.toUpperCase();" type="text" required type="tex" name="nombre" class="form-control" value=" <?php echo $fila['nombre'] ?>" id="exampleInputEmail1" placeholder="Intoducir el Nombre">
-<label for="exampleInputFile">Apellido</label>
-<input  onkeypress="return caracteres(event)" onblur="this.value=this.value.toUpperCase();" required type="tex" name="apellido" class="form-control" value=" <?php echo $fila['apellido'] ?>" id="exampleInputEmail1" placeholder="Apellido">
-
-<label for="exampleInputFile">Usuario</label>
-<input    required type="tex" name="usuario" class="form-control" value=" <?php echo $fila['usuario'] ?>" id="exampleInputEmail1" placeholder="Usuario">
-
-
-
-<label for="exampleInputFile">correo</label>
-<input  required type="email" name="correo" class="form-control" value=" <?php echo $fila['correo'] ?>"  placeholder="Correo">
-
-<label for="exampleInputFile">Nivel De Usuario</label>
-
-
-<select  for="exampleInputEmail" class="form-control" name='nivel'>
-<option  value="1">Administrador</option>
-<option value="2">Usuario Invitado</option>
-
-
-
-
-</select>
-
-
-
-</div>
-
-
-
-</div><!-- /.box-body -->
-
-<div class="box-footer">
-<input type=submit  class="btn btn-primary btn-lg" name="eliminar" id="eliminar" value="ELIMINAR">
-
-
-
-
-</div>
-</form>
-</div><!-- /.box -->
 <?php
 
 
@@ -519,14 +212,11 @@ while ($fila=$bd->mostrar_registros()) {
    $(document).ready(function(){
 
         jquery1_5('#run').Rut({
-        on_error: function(){
-            
-            jquery1_5('#run').focus();
-            jquery1_5('#run').select();
-             
+                on_error: function(){
+                jquery1_5('#run').focus();
+                jquery1_5('#run').select();
         },
         on_success: function(){
-
           $.ajax({
                 method: "POST",
                 url: "ajax.php",
@@ -542,7 +232,6 @@ while ($fila=$bd->mostrar_registros()) {
                      $("#cargo").val(data["cargo"].alias);
                      $("#alias").val(data["correo"].alias);
                      $("#alias").val(data["data"].alias);
-                     
 
                    }
                 });
