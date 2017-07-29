@@ -22,12 +22,7 @@
                     <span class="icon-bar"></span>
                 </a>
             <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                            <br>
-                        
-                        <br>
-                        
-                        <br>
+                    <ul class="nav navbar-nav"> 
                         <!-- Messages: style can be found in dropdown.less-->
                         <?php /* <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -209,8 +204,7 @@
                         </li> 
 						*/ ?>
                         <!-- User Account: style can be found in dropdown.less -->
-<br><br>
-                     
+         
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
