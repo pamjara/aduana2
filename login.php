@@ -67,7 +67,8 @@ include 'inc/comun.php'; ?>
             $_SESSION['dondequeda_nive_usua'] = $mostrar['nive_usua'];
             $_SESSION['dondequeda_usuario'] = $mostrar['usuario'];
             $_SESSION['dondequeda_correo'] = $mostrar['correo'];
-            $_SESSION['dondequeda_id'] = $mostrar['id'];
+            $_SESSION['dondequeda_id'] = $mostrar['rut'];
+
                     
             
             header("Location: index.php?mod=index");

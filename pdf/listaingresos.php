@@ -86,7 +86,7 @@ class MiPDF extends FPDF {
 	
 	$mipdf -> Ln(10);
 	
-$sql="SELECT * FROM Ingresos where id_ingresos";
+$sql="SELECT * FROM Ingresos";
 	//$consulta=mysql_query($conexion,$sql); 
 $sql2=$bd->consulta($sql);
 
@@ -105,15 +105,15 @@ $num = 0;
 		$num;
 
 
-		$id_ingresos= $datos ['id_ingresos'];
+		$id_ingresos= $datos ['id'];
 		$numIngresos = $datos ['numIngresos'];
-		$fechaIngresos = $datos ['fechaIngresos'];
-		$patenteIngresos = $datos ['patenteIngresos'];
-		$dusIngresos= $datos ['dusIngresos'];
-		$kbingresos= $datos ['kbingresos'];
-		$pasajerosIngresos = $datos ['pasajerosIngresos'];
-		$estadoIngresos = $datos ['estadoIngresos'];
-		$numSellos= $datos ['numSellos'];
+		$fechaIngresos = $datos ['fecha'];
+		$patenteIngresos = $datos ['patente'];
+		$dusIngresos= $datos ['dus'];
+		$kbingresos= $datos ['kilos'];
+		$pasajerosIngresos = $datos ['pasajeros'];
+		$estadoIngresos = $datos ['tipo_carga'];
+		$numSellos= $datos ['tipo'];
 		
 		
 		

@@ -131,17 +131,16 @@ function rutNumerico($rut){
 
     
 
-    }
     }else{
                   echo '<div class="alert alert-success alert-dismissable">
                                 <i class="fa fa-check"></i>
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <b>Se elimino el funcionario </b> Correctamente... 
+                                <b>Se eliminó el funcionario </b> Correctamente... 
                             </div>';
-        $sql2="DELETE FROM `funcionario` WHere rut='".$_POST["submitAction"]."'";
-
+        $sql2="DELETE FROM `funcionario` WHere rut='".rutNumerico($_POST["submitAction"])."'";
         $cs=$bd->consulta($sql2);
         
+    }
     } 
 
 if( isset($_GET["mod"])){
@@ -291,20 +290,20 @@ if( isset($_GET["mod"])){
                     </div> 
                 
                     <div> 
-                    <input type="hidden" name="submitAction" value="nuevo">
                         <label for="guardar"> &nbsp;&nbsp; </label><br>
-                                            <a href="?mod=registroadmin" class="btn btn-default"><i class="fa fa-eraser"></i> Limpiar</a>
+                        <a href="?mod=registroadmin" class="btn btn-default"><i class="fa fa-eraser"></i> Limpiar</a>
                     <?php
                     if($_GET["action"]== "ver"){ 
+
                     } else if($_GET["action"] == "eliminar"){
-                 ?>
+                    ?>
                         <button type="submit" class="btn btn-danger" name="guardar"  value="Eliminar"><i class="fa fa-trash"></i> Eliminar</button>
                     <input type="hidden" name="submitAction" value="<?php echo $rut;?>">
                     
                     <?php
 
 
-                }   else if($_GET["action"] == "editar"){
+                    }   else if($_GET["action"] == "editar"){
                     ?>
                     <input type="hidden" name="submitAction" value="editar">
                     
@@ -313,7 +312,7 @@ if( isset($_GET["mod"])){
                     <?php
 
 
-                }else{
+                    }else{
 
 
                     ?>
