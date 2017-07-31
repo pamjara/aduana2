@@ -85,127 +85,71 @@ MAS INFORMACION <i class=""></i>
                   
                       <div class="col-md-12">
                        
-                            
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">lista de ingresos</h3>                                    
-                                </div><!-- /.box-header -->
-                                <div class="box-body table-responsive">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                        <thead>
-                                                <tr>
-                                                <th>Nº</th>
-                                                <th>Fecha</th>
-                                                <th>Patente</th>
-                                                <th>DUS</th>
-                                                <th>K.B.</th>
-                                                <th>Pasajeros</th>
-                                                <th>Tipo Carga</th>
-                                                <th>Cant</th>
-                                                <th>Sellos</th>
-                                                <th>Sellos Nulo</th>
-                                                <th>Opciones</th>
-                                                </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                            if($tipo2==1){
-                                        $consulta="SELECT * FROM ingresos INNER JOIN sellos ON ingresos.ingresoSellos = sellos.id_sellos";
-                                        
-                                        $bd->consulta($consulta);
-                                        while ($fila=$bd->mostrar_registros()) {
-                                            switch ($fila['status']) {
-                                                case 1:
-                                                    $btn_st = "danger";
-                                                    $txtFuncion = "Desactivar";
-                                                    break;
-                                                
-                                                case 0:
-                                                    $btn_st = "primary";
-                                                    $txtFuncion = "Activar";
-                                                    break;
-                                            }
-                                             //echo '<li data-icon="delete"><a href="?mod=lugares?edit='.$fila['id_tipo'].'"><img src="images/lugares/'.$fila['imagen'].'" height="350" >'.$fila['nombre'].'</a><a href="?mod=lugares?borrar='.$fila['id_tipo'].'" data-position-to="window" >Borrar</a></li>';
-                                             echo "<tr>
-                              <td>
-                                  $fila[numRegistro]
-                              </td>
-                              <td>
-                                  $fila[fechaIngresos]
-                              </td>
-                              <td> 
-                                  $fila[patenteIngresos]                                                     
-                              </td>
-                              <td>
-                                  $fila[dusIngresos]
-                              </td>
-                              <td>
-                                  $fila[kbingresos]
-                              </td>
-                              <td>
-                                  $fila[pasajerosIngresos]
-                              </td>
-                              <td>
-                                  $fila[estadoIngresos]
-                              </td>
-                              <td>
-                                  $fila[cantidadSellos]
-                              </td>
-                               <td>
-                                  $fila[numSellos]
-                              </td>
-                              <td>
-                                  $fila[nuloSellos]
-                              </td>
-                                                        
-                                                       
-                                                         <td><center>
-                                                            ";
-      
-echo"
-       <a  href=?mod=registroingresos&consultar&codigo=".$fila["id_ingresos"]."><img src='./img/consultarr.png' width='25' alt='Edicion' title='VER LOS DATOS DE ".$fila["estadoIngresos"]."'></a> ";
-       if($tipo2==1){
-                                echo "
-      
-      <a  href=?mod=registroingresos&editar&codigo=".$fila["id_ingresos"]."><img src='./img/editar.png' width='25' alt='Edicion' title='EDITAR LOS DATOS DE ".$fila["estadoIngresos"]."'></a> 
-      <a   href=?mod=registroingresos&eliminar&codigo=".$fila["id_ingresos"]."><img src='./img/elimina2.png'  width='25' alt='Edicion' title='ELIMINAR A   ".$fila["estadoIngresos"]."'></a>
-      ";
-    }
-     
-     }
-                                               echo "    </center>     </td>
-                                                    </tr>";
-
-
-                                        
-                                        } ?>                                            
-                                        </tbody>
-                                        <tfoot>
-                                                <tr>
-                                                <th>Nº</th>
-                                                <th>Fecha</th>
-                                                <th>Patente</th>
-                                                <th>DUS</th>
-                                                <th>K.B.</th>
-                                                <th>Pasajeros</th>
-                                                <th>Tipo Carga</th>
-                                                <th>Cant</th>
-                                                <th>Sellos</th>
-                                                <th>Sellos Nulo</th>
-                                                <th>Opciones</th>
-                                                </tr>
-                                        </tfoot>
-                                    </table>
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-
-                    
-                        </div><!-- /.col -->
-                        
-                                </div><!-- /.box-body -->
-                            </div><!-- /.box -->
-                        </div><!-- /.col -->
-                    
-                    </div><!-- /.row -->
-
+                              <table id="example1" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Nº</th>
+                <th>Fecha</th>
+                <th>Patente</th>
+                <th>DUS</th>
+                <th>K.B.</th>
+                <th>Pasajeros</th>
+                <th>Funcionario</th>
+                
+                <th>Tipo Carga</th>
+                <th>Tipo</th>
+                <th>Cant. Sellos</th>
+                <th>Obs. Sellos</th> 
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+            $consulta="SELECT 
+                            ingresos.id as id, 
+                            ingresos.fecha, patente, dus, kilos, pasajeros, 
+                            funcionario.alias as funcionario,
+                            tipo_carga,
+                            tipo ,
+                            sellos.cantidad as cantidad,
+                            sellos.numero as observacion
+                        FROM ingresos 
+                            INNER JOIN sellos ON  ingresos.id = sellos.id_ingreso 
+                            LEFT JOIN funcionario ON FUNCIONARIO.rut = ingresos.rut";
+            $bd->consulta($consulta);
+            while ($fila=$bd->mostrar_registros()) {
+            
+                echo "<tr>
+                            <td>$fila[id]</td>
+                            <td>$fila[fecha]</td>
+                            <td>$fila[patente]</td>
+                            <td>$fila[dus]</td>
+                            <td>$fila[kilos] </td>
+                            <td>$fila[pasajeros]</td>
+                            <td>$fila[funcionario]</td>
+                            <td>$fila[tipo_carga]</td> 
+                            <td>$fila[tipo]</td> 
+                            <td>$fila[cantidad]</td> 
+                            <td>$fila[observacion]</td>  
+                        </tr>";
+    } 
+    ?>                                            
+    </tbody>
+    <tfoot>
+            <tr>
+                <th>Nº</th>
+                <th>Fecha</th>
+                <th>Patente</th>
+                <th>DUS</th>
+                <th>K.B.</th>
+                <th>Pasajeros</th>
+                <th>Funcionario</th>
+                
+                <th>Tipo Carga</th>
+                <th>Tipo</th>
+                <th>Cant. Sellos</th>
+                <th>Obs. Sellos</th> 
+            </tr>
+    </tfoot>
+    </table>
+    </div><!-- /.box-body --> 
 

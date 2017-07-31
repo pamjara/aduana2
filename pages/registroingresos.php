@@ -361,10 +361,12 @@ if($id==""){
                 <th>DUS</th>
                 <th>K.B.</th>
                 <th>Pasajeros</th>
+                <th>Funcionario</th>
+                
                 <th>Tipo Carga</th>
-                <th>Cant</th>
-                <th>Sellos</th>
-                <th>Sellos Nulo</th>
+                <th>Tipo</th>
+                <th>Cant. Sellos</th>
+                <th>Obs. Sellos</th>
                 <th>Opciones</th>
             </tr>
         </thead>
@@ -376,7 +378,8 @@ if($id==""){
                             funcionario.alias as funcionario,
                             tipo_carga,
                             tipo ,
-                            sellos.cantidad as cantidad
+                            sellos.cantidad as cantidad,
+                            sellos.numero as observacion
                         FROM ingresos 
                             INNER JOIN sellos ON  ingresos.id = sellos.id_ingreso 
                             LEFT JOIN funcionario ON FUNCIONARIO.rut = ingresos.rut";
@@ -394,6 +397,8 @@ if($id==""){
                             <td>$fila[tipo_carga]</td> 
                             <td>$fila[tipo]</td> 
                             <td>$fila[cantidad]</td> 
+                            <td>$fila[observacion]</td> 
+                            
                             
                             <td> 
                                 <a  href=?mod=registroingresos&action=ver&codigo=".$fila["id"].">
@@ -418,10 +423,12 @@ if($id==""){
                 <th>DUS</th>
                 <th>K.B.</th>
                 <th>Pasajeros</th>
+                <th>Funcionario</th>
+                
                 <th>Tipo Carga</th>
-                <th>Cant</th>
-                <th>Sellos</th>
-                <th>Sellos Nulo</th>
+                <th>Tipo</th>
+                <th>Cant. Sellos</th>
+                <th>Obs. Sellos</th>
                 <th>Opciones</th>
             </tr>
     </tfoot>
