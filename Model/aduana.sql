@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: aduana
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,11 +60,12 @@ CREATE TABLE `ingresos` (
   `fecha` date NOT NULL,
   `patente` varchar(50) NOT NULL,
   `cantidad` int(20) DEFAULT NULL,
-  `numero` bigint(30) NOT NULL,
   `kilos` int(30) NOT NULL,
   `pasajeros` int(30) NOT NULL,
   `estado` varchar(30) NOT NULL,
   `rut` int(11) DEFAULT NULL,
+  `tipo_carga` varchar(45) DEFAULT NULL,
+  `tipo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -75,7 +76,7 @@ CREATE TABLE `ingresos` (
 
 LOCK TABLES `ingresos` WRITE;
 /*!40000 ALTER TABLE `ingresos` DISABLE KEYS */;
-INSERT INTO `ingresos` VALUES (7,0,'0000-00-00','HUEAWAI',2,50000,80000,0,'NUEVO',NULL),(8,0,'0000-00-00','SAMSUNG',1,100000,130000,0,'USADO',NULL),(9,0,'0000-00-00','HUEAWAI',0,50000,80000,0,'NUEVO',NULL),(10,0,'0000-00-00','HUEAWAI',0,100000,130000,0,'NUEVO',NULL),(11,0,'0000-00-00','papa',0,233,233232,0,'USADO',NULL),(12,0,'0000-00-00','marca',0,13123,124124,124124,'REPARADO',NULL),(13,0,'0000-00-00','dsgdsfg',0,434,36436,4636,'3',NULL),(14,0,'0000-00-00','werwer',0,2354,324234,234234,'A PIE',NULL),(15,1234,'2017-06-02','1234',0,12,1234,12,'BICICLETA',NULL);
+INSERT INTO `ingresos` VALUES (7,0,'0000-00-00','HUEAWAI',2,80000,0,'NUEVO',NULL,NULL,NULL),(8,0,'0000-00-00','SAMSUNG',1,130000,0,'USADO',NULL,NULL,NULL),(9,0,'0000-00-00','HUEAWAI',0,80000,0,'NUEVO',NULL,NULL,NULL),(10,0,'0000-00-00','HUEAWAI',0,130000,0,'NUEVO',NULL,NULL,NULL),(11,0,'0000-00-00','papa',0,233232,0,'USADO',NULL,NULL,NULL),(12,0,'0000-00-00','marca',0,124124,124124,'REPARADO',NULL,NULL,NULL),(13,0,'0000-00-00','dsgdsfg',0,36436,4636,'3',NULL,NULL,NULL),(14,0,'0000-00-00','werwer',0,324234,234234,'A PIE',NULL,NULL,NULL),(15,1234,'2017-06-02','1234',0,1234,12,'BICICLETA',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `ingresos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -116,13 +117,12 @@ DROP TABLE IF EXISTS `sellos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sellos` (
-  `nuloSellos` int(50) NOT NULL,
-  `numRegSellos` int(50) NOT NULL,
-  `numSellos` int(10) NOT NULL,
-  `cantidadSellos` int(5) NOT NULL,
-  `id_sellos` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id_sellos`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `id` int(12) NOT NULL AUTO_INCREMENT,
+  `cantidad` int(11) NOT NULL,
+  `numero` varchar(150) NOT NULL,
+  `id_ingreso` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `sellos` (
 
 LOCK TABLES `sellos` WRITE;
 /*!40000 ALTER TABLE `sellos` DISABLE KEYS */;
-INSERT INTO `sellos` VALUES (0,0,0,1,8),(0,0,0,0,9),(0,0,0,0,10),(0,0,0,0,11),(0,0,0,0,12),(0,0,0,0,13),(0,0,0,0,14),(0,0,0,0,15),(0,0,0,0,16),(0,0,0,0,17),(0,0,0,0,18);
+INSERT INTO `sellos` VALUES (19,0,'0',8),(20,0,'0',9),(21,0,'0',10),(22,0,'0',11),(23,0,'0',12),(24,0,'0',13),(25,0,'0',14),(26,0,'0',15),(27,0,'0',16),(28,0,'0',17),(29,0,'0',18),(30,10,'sellos rojos del 56 al 65',15);
 /*!40000 ALTER TABLE `sellos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -144,4 +144,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-07-24  2:10:22
+-- Dump completed on 2017-07-31 10:29:17

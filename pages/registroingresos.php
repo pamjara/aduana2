@@ -39,35 +39,35 @@ if (isset($_POST['submitAction'])) {
             $tipo=$_POST["tipo"];  
             $tipo_carga=$_POST["tipo_carga"];
 
-                $sql2="select *   from ingresos where id='".$_POST["numIngresos"]."'";
+            $sql2="select *   from ingresos where id='".$_POST["numIngresos"]."'";
             $rut=$_SESSION['dondequeda_id'];
 
-                $cs=$bd->consulta($sql2);
+            $cs=$bd->consulta($sql2);
+
             if($bd->numeroFilas($cs)==0){
-                
                 if($_POST["submitAction"]=="guardar"){
                     
-                    $sql2="INSERT INTO `ingresos` (dus, fecha, patente, kilos, pasajeros, rut, tipo, tipo_carga)
+                    $sql2="INSERT INTO ingresos(dus, fecha, patente, kilos, pasajeros, rut, tipo, tipo_carga)
                             values
                             ('$dus', '$fecha', '$patente', '$kilos', '$pasajeros', '$rut', '$tipo', '$tipo_carga')";
-
+ 
                     echo '<div class="alert alert-success alert-dismissable">
                         <i class="fa fa-check"></i>
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <b>Bien!</b>Se registro el '.$tipo.' nuevo  Correctamente... 
                         </div>';
-                $cs=$bd->consulta($sql2);
+                    $cs=$bd->consulta($sql2);
 
 
-$id_registro="";
+                    $id_registro="";
                     $result = $bd->consulta("select max(id) as id from ingresos");
                     while($fila=$bd->mostrar_registros()){
-              $id_registro= $fila["id"];
+                        $id_registro= $fila["id"];
                     }   
 
-                                  $sql_sellos = "INSERT INTO SELLOS (numero, cantidad, id_ingreso) values ('".$_POST['sellos']."', '".$_POST['cantidad']."','".$id_registro."')";
-                   
-                        $bd->consulta($sql_sellos);    
+                    $sql_sellos = "INSERT INTO SELLOS (numero, cantidad, id_ingreso) values ('".$_POST['sellos']."', '".$_POST['cantidad']."','".$id_registro."')";
+                
+                    $bd->consulta($sql_sellos);    
                 }
             }
             if($_POST["submitAction"]=="editar"){
@@ -79,6 +79,8 @@ $id_registro="";
                                     <b>Bien!</b>Se edito el $tipo  Correctamente... 
                                 </div>';
                     $cs=$bd->consulta($sql2);
+
+
                     $sql_sellos="UPDATE SELLOS SET numero='".$_POST['sellos']."', cantidad='".$_POST['cantidad']."' WHERE id_ingreso=".$_POST['numIngresos'];
        
                         $bd->consulta($sql_sellos);
@@ -127,21 +129,14 @@ $cantidadsello="";
 
 if( isset($_GET["mod"])){
     $action =$_GET["mod"];
-    $codigo =$_GET["codigo"];
      
+    if(isset($_GET["codigo"])){
 
-    $sql="select * from ingresos where id='$codigo'";
+    $codigo =$_GET["codigo"];
+      $sql="select * from ingresos where id='$codigo'";
    
     $cs=$bd->consulta($sql);
-
-    if($bd->numeroFilas($cs)==0 && isset($_GET["action"])){
-        //echo "Datos Guardados Correctamente";
-        echo '<div class="alert alert-danger alert-dismissable">
-                <i class="fa fa-check"></i>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <b>Bien!</b>No existe el ingreso consulado... 
-                </div>';
-    }else{
+ 
 
             while ($fila=$bd->mostrar_registros()) {
                     $id=$fila["id"];
@@ -179,10 +174,11 @@ if( isset($_GET["mod"])){
 
             }else if($_GET["action"] == "editar"){ 
                     $readonly=""; 
-            }
-        } 
+            } 
     }
 
+
+} 
 if($id==""){
 
     $sql="select (max(id)+ 1 ) as id from ingresos";
@@ -192,8 +188,6 @@ if($id==""){
             $id=$fila["id"];
         }
 }
-
-
 ?>
 <div class="box box-primary">
 
@@ -282,10 +276,21 @@ if($id==""){
                         </select>
                     </div>
                     <div class="col-md-2 ">
+                        <?php
+                          $ing = "";
+                            $egr = "";
+                            
+                            if($tipo=="Ingreso"){
+                                $ing ="selected";
+                            }else if($tipo=="Egreso"){
+                                $egr ="selected";
+                            }
+                        ?>
                         <label for="tipo">Ingreso/Egreso</label>
                         <select  <?php echo $readonly;?> class="form-control" name='tipo' id='tipo'>
-                            <option  value="Ingreso">Ingreso</option>
-                            <option value="Egreso">Egreso</option>
+
+                            <option <?php echo $ing;?>  value="Ingreso">Ingreso</option>
+                            <option  <?php echo $egr;?> value="Egreso">Egreso</option>
                         </select>
                     </div>
                 </div>
@@ -373,46 +378,35 @@ if($id==""){
                             tipo ,
                             sellos.cantidad as cantidad
                         FROM ingresos 
-                            INNER JOIN sellos ON 
-                            ingresos.id = sellos.id_ingreso 
+                            INNER JOIN sellos ON  ingresos.id = sellos.id_ingreso 
                             LEFT JOIN funcionario ON FUNCIONARIO.rut = ingresos.rut";
             $bd->consulta($consulta);
             while ($fila=$bd->mostrar_registros()) {
-                switch ($fila['status']) {
-                    case 1:
-                        $btn_st = "danger";
-                        $txtFuncion = "Desactivar";
-                    break;
-
-                    case 0:
-                        $btn_st = "primary";
-                        $txtFuncion = "Activar";
-                    break;
-                    }
-    echo "<tr>
-                <td>$fila[id]</td>
-                <td>$fila[fecha]</td>
-                <td>$fila[patente]</td>
-                <td>$fila[dus]</td>
-                <td>$fila[kilos] </td>
-                <td>$fila[pasajeros]</td>
-                <td>$fila[funcionario]</td>
-                <td>$fila[tipo_carga]</td> 
-                <td>$fila[tipo]</td> 
-                <td>$fila[cantidad]</td> 
-                
-                <td> 
-                    <a  href=?mod=registroingresos&action=ver&codigo=".$fila["id"].">
-                        <img src='./img/consultarr.png' width='25' alt='Edicion' title='VER LOS DATOS DE ".$fila["id"]."'>
-                    </a> 
-                    <a  href=?mod=registroingresos&action=editar&codigo=".$fila["id"].">
-                        <img src='./img/editar.png' width='25' alt='Edicion' title='EDITAR LOS DATOS DE ".$fila["id"]."'>
-                    </a> 
-                    <a   href=?mod=registroingresos&action=eliminar&codigo=".$fila["id"].">
-                        <img src='./img/elimina2.png'  width='25' alt='Edicion' title='ELIMINAR A   ".$fila["id"]."'>
-                    </a>
-                </td>
-            </tr>";
+            
+                echo "<tr>
+                            <td>$fila[id]</td>
+                            <td>$fila[fecha]</td>
+                            <td>$fila[patente]</td>
+                            <td>$fila[dus]</td>
+                            <td>$fila[kilos] </td>
+                            <td>$fila[pasajeros]</td>
+                            <td>$fila[funcionario]</td>
+                            <td>$fila[tipo_carga]</td> 
+                            <td>$fila[tipo]</td> 
+                            <td>$fila[cantidad]</td> 
+                            
+                            <td> 
+                                <a  href=?mod=registroingresos&action=ver&codigo=".$fila["id"].">
+                                    <img src='./img/consultarr.png' width='25' alt='Edicion' title='VER LOS DATOS DE ".$fila["id"]."'>
+                                </a> 
+                                <a  href=?mod=registroingresos&action=editar&codigo=".$fila["id"].">
+                                    <img src='./img/editar.png' width='25' alt='Edicion' title='EDITAR LOS DATOS DE ".$fila["id"]."'>
+                                </a> 
+                                <a   href=?mod=registroingresos&action=eliminar&codigo=".$fila["id"].">
+                                    <img src='./img/elimina2.png'  width='25' alt='Edicion' title='ELIMINAR A   ".$fila["id"]."'>
+                                </a>
+                            </td>
+                        </tr>";
     } 
     ?>                                            
     </tbody>
